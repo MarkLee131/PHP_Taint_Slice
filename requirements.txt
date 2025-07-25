@@ -1,0 +1,4 @@
+# requirements.txt
+argparse
+requests
+PyYAML>=6.0 

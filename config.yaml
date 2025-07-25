@@ -1,0 +1,93 @@
+# Taint Analysis Configuration
+# Enable/disable patterns by setting to true/false
+
+sources:
+  # User input sources
+  user_input:
+    - pattern: "\\$_GET\\["
+      enabled: true
+    - pattern: "\\$_POST\\["
+      enabled: true
+    - pattern: "\\$_COOKIE\\["
+      enabled: true
+    - pattern: "\\$_REQUEST\\["
+      enabled: true
+    - pattern: "\\$_SERVER\\["
+      enabled: true
+    - pattern: "\\$_FILES\\["
+      enabled: true
+  
+  # File input sources
+  file_input:
+    - pattern: "fgets\\s*\\("
+      enabled: true
+    - pattern: "file_get_contents\\s*\\("
+      enabled: true
+    - pattern: "fread\\s*\\("
+      enabled: false
+    - pattern: "fgetcsv\\s*\\("
+      enabled: false
+
+sinks:
+  # Output sinks
+  output:
+    - pattern: "echo\\s+"
+      enabled: true
+    - pattern: "print\\s+"
+      enabled: true
+    - pattern: "printf\\s*\\("
+      enabled: false
+  
+  # Database sinks
+  database:
+    - pattern: "pg_query\\s*\\("
+      enabled: true
+    - pattern: "pg_send_query\\s*\\("
+      enabled: true
+    - pattern: "sqlite_query\\s*\\("
+      enabled: true
+    - pattern: "mysql_query\\s*\\("
+      enabled: true
+    - pattern: "mysqli_query\\s*\\("
+      enabled: true
+  
+  # Command execution sinks
+  command:
+    - pattern: "exec\\s*\\("
+      enabled: true
+    - pattern: "system\\s*\\("
+      enabled: true
+    - pattern: "passthru\\s*\\("
+      enabled: true
+    - pattern: "shell_exec\\s*\\("
+      enabled: true
+    - pattern: "popen\\s*\\("
+      enabled: true
+    - pattern: "proc_open\\s*\\("
+      enabled: true
+    - pattern: "eval\\s*\\("
+      enabled: true
+  
+  # File operation sinks
+  file_ops:
+    - pattern: "unlink\\s*\\("
+      enabled: true
+    - pattern: "fopen\\s*\\("
+      enabled: true
+    - pattern: "fwrite\\s*\\("
+      enabled: true
+    - pattern: "file_put_contents\\s*\\("
+      enabled: true
+    - pattern: "copy\\s*\\("
+      enabled: true
+    - pattern: "move_uploaded_file\\s*\\("
+      enabled: true
+  
+  # Network sinks
+  network:
+    - pattern: "curl_exec\\s*\\("
+      enabled: true
+    - pattern: "curl_multi_exec\\s*\\("
+      enabled: true
+    - pattern: "header\\s*\\("
+      enabled: false 
